@@ -1,0 +1,17 @@
+a.out
+*.a
+*.o
+.vscode
+*.gcno
+*.gcda
+*.txt
+*.pdf
+exe
+libmy.a
+unit_tests
+to_not_push
+corewar.c
+corawar
+coding-style-reports.log
+*.py
+binaries
