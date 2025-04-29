@@ -87,5 +87,6 @@ int print_help(void);
 void initialize_vm(vm_t *vm);
 void free_vm(vm_t *vm);
 void free_champions(champion_t **champions, int count);
+int parse_arguments(int argc, char *argv[]);
 
 #endif //COREWAR_H

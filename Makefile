@@ -8,6 +8,7 @@
 SRC	=	src/creates.c	\
 		src/init_and_free.c	\
 		src/op.c	\
+		src/parse_arguments.c	\
 		src/utilities/error_msg.c	\
 		src/utilities/print_help.c
 

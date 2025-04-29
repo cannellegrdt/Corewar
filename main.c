@@ -14,5 +14,7 @@ int main(int argc, char **argv)
         return print_help();
     if (argc == 1)
         return error_msg("Error: at least two champions are needed.\n", 84);
+    if (parse_arguments(argc, argv) == 84)
+        return 84;
     return 0;
 }

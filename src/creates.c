@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Féfé_Corewar_pt1
+** Corewar
 ** File description:
 ** creates.c
 */
