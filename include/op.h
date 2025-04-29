@@ -45,6 +45,7 @@
     #define CYCLE_TO_DIE 1536 /* number of cycle before beig declared dead */
     #define CYCLE_DELTA 5
     #define NBR_LIVE 40
+    #define CHAMP_MAX_SIZE (MEM_SIZE / 6)
 
 typedef char args_type_t;
 
@@ -58,7 +59,7 @@ typedef struct op_s {
 } op_t;
 
 /* op_tab */
-extern op_t op_tab[];
+extern const op_t op_tab[];
 
 typedef struct header_s {
     int magic;

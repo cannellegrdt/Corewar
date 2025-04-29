@@ -5,12 +5,16 @@
 ## Makefile
 ##
 
-SRC	=	src/parse_arguments.c	\
+SRC	=	src/creates.c	\
+		src/init_and_free.c	\
+		src/op.c	\
 		src/utilities/error_msg.c	\
 		src/utilities/print_help.c
 
+
 LIB_SRC	=	lib/my/my_getnbr.c	\
 		lib/my/my_memset.c	\
+		lib/my/my_putnbr.c	\
 		lib/my/my_strcmp.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
@@ -38,10 +42,10 @@ $(LIB): $(LIB_OBJ)
 	ranlib $(LIB)
 
 clean:
-	$(RM) $(OBJ)
+	$(RM) $(OBJ) $(LIB_OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIB)
 	$(RM) unit_tests *.gcno *.gcda
 
 re: fclean all

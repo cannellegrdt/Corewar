@@ -11,6 +11,7 @@
 
 int my_getnbr(char const *str);
 void *my_memset(void *pointer, int value, size_t size);
+void my_putnbr(int n);
 int my_strcmp(char const *s1, char const *s2);
 char *my_strdup(char *str);
 int my_strlen(char const *str);

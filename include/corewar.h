@@ -34,6 +34,9 @@ typedef struct process_s {
     int wait_cycles;
     int current_op;
     bool alive;
+    int current_op_args[MAX_ARGS_NUMBER];
+    int current_op_arg_types[MAX_ARGS_NUMBER];
+    struct vm_s *vm;
     struct process_s *next;
 } process_t;
 
@@ -66,11 +69,23 @@ typedef struct vm_s {
     op_function_t op_functions[16];
 } vm_t;
 
+typedef struct decode_context_s {
+    vm_t *vm;
+    int pc;
+    int offset;
+    byte_t opcode;
+    bool has_coding_byte;
+    byte_t coding_byte;
+    instruction_t *inst;
+} decode_context_t;
+
 /* utilities */
 int error_msg(char *str, int ret_value);
 int print_help(void);
 
 /* other functions */
-int parse_arguments(int argc, char *argv[]);
+void initialize_vm(vm_t *vm);
+void free_vm(vm_t *vm);
+void free_champions(champion_t **champions, int count);
 
 #endif //COREWAR_H

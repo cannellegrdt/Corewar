@@ -11,8 +11,10 @@ libmy.a
 unit_tests
 to_not_push
 corewar.c
-corawar
+corewar
 coding-style-reports.log
 *.py
 binaries
 champions
+attempt_corewar
+outputs_tester
