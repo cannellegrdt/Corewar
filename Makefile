@@ -5,25 +5,37 @@
 ## Makefile
 ##
 
-SRC	=	src/null_src.c
+SRC	=	src/parse_arguments.c	\
+		src/utilities/error_msg.c	\
+		src/utilities/print_help.c
+
+LIB_SRC	=	lib/my/my_getnbr.c	\
+		lib/my/my_memset.c	\
+		lib/my/my_strcmp.c	\
+		lib/my/my_strdup.c	\
+		lib/my/my_strlen.c	\
+		lib/my/my_strncpy.c
 
 MAIN_SRC	= main.c
 
 OBJ	=	$(SRC:.c=.o) $(MAIN_SRC:.c=.o)
+LIB_OBJ	=	$(LIB_SRC:.c=.o)
 
 NAME	=	corewar
+LIB	=	libmy.a
 
+LDFLAGS    = -L. -lmy
 CFLAGS	+=	-Wall -Wextra -Wpedantic -Werror
 CPPFLAGS	+=	-Iinclude/
 
-ifeq ($(ENV), dev)
-	CFLAGS	+=	-g3
-endif
+all: $(LIB) $(NAME)
 
-all: $(NAME)
+$(NAME): $(OBJ) $(LIB)
+	gcc -o $(NAME) $(OBJ) -L. -lmy -g3
 
-$(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ)
+$(LIB): $(LIB_OBJ)
+	ar rc $(LIB) $(LIB_OBJ)
+	ranlib $(LIB)
 
 clean:
 	$(RM) $(OBJ)
