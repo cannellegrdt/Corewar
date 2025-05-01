@@ -6,6 +6,7 @@
 ##
 
 SRC	=	src/creates.c	\
+		src/dump_memory.c	\
 		src/init_and_free.c	\
 		src/op.c	\
 		src/parse_arguments.c	\

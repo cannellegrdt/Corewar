@@ -52,5 +52,4 @@ void initialize_vm(vm_t *vm)
     vm->last_alive_champion = 0;
     vm->options.dump_flag = false;
     vm->options.dump_cycle = 0;
-    //initialize_op(vm);
 }

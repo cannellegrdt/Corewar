@@ -25,19 +25,18 @@ int parse_dump_flag(int *i, int argc, char **argv, vm_t *vm)
     return 0;
 }
 
-int parse_n_flag(int *i, int argc, char **argv, champion_t *champ,
-    int champ_count, champion_t **champs)
+int parse_n_flag(parse_n_flag_args_t *args)
 {
-    if (*i + 1 >= argc)
+    if (*args->i + 1 >= args->argc)
         return error_msg("Error: -n requires a number.\n", 84);
-    champ->number = my_getnbr(argv[*i + 1]);
-    if (champ->number <= 0)
+    args->champ->number = my_getnbr(args->argv[*args->i + 1]);
+    if (args->champ->number <= 0)
         return error_msg("Error: champion number must be positive.\n", 84);
-    for (int j = 0; j < champ_count; j++) {
-        if (champs[j]->number == champ->number)
+    for (int j = 0; j < args->champ_count; j++) {
+        if (args->champs[j]->number == args->champ->number)
             return error_msg("Error: duplicate champion number.\n", 84);
     }
-    *i += 2;
+    *args->i += 2;
     return 0;
 }
 
@@ -52,17 +51,20 @@ int parse_a_flag(int *i, int argc, char **argv, champion_t *champ)
     return 0;
 }
 
-int parse_champion_flags(int *i, int argc, char **argv, champion_t *champ,
-    int champ_count, champion_t **champs)
+int parse_champion_flags(parse_champion_flags_args_t *args)
 {
-    while (*i < argc && (argv[*i][0] == '-')) {
-        if (!my_strcmp(argv[*i], "-n") &&
-        parse_n_flag(i, argc, argv, champ, champ_count, champs) != 0)
+    parse_n_flag_args_t n_args = {args->i, args->argc, args->argv,
+        args->champ, args->champ_count, args->champs};
+
+    while (*args->i < args->argc && (args->argv[*args->i][0] == '-')) {
+        if (!my_strcmp(args->argv[*args->i], "-n") &&
+            parse_n_flag(&n_args) != 0)
             return 84;
-        if (!my_strcmp(argv[*i], "-a") &&
-        parse_a_flag(i, argc, argv, champ) != 0)
+        if (!my_strcmp(args->argv[*args->i], "-a") &&
+            parse_a_flag(args->i, args->argc, args->argv, args->champ) != 0)
             return 84;
-        if (!my_strcmp(argv[*i], "-n") && !my_strcmp(argv[*i], "-a"))
+        if (!my_strcmp(args->argv[*args->i], "-n") &&
+            !my_strcmp(args->argv[*args->i], "-a"))
             break;
     }
     return 0;
@@ -76,7 +78,6 @@ int parse_arguments(int argc, char *argv[])
     initialize_vm(&vm);
     if (parse_dump_flag(&i, argc, argv, &vm) != 0)
         return 84;
-    //run_vm(&vm);
     free_vm(&vm);
     return 0;
 }

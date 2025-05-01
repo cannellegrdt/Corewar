@@ -79,6 +79,26 @@ typedef struct decode_context_s {
     instruction_t *inst;
 } decode_context_t;
 
+/// CODING STYLE ///
+typedef struct {
+    int *i;
+    int argc;
+    char **argv;
+    champion_t *champ;
+    int champ_count;
+    champion_t **champs;
+} parse_n_flag_args_t;
+
+typedef struct {
+    int *i;
+    int argc;
+    char **argv;
+    champion_t *champ;
+    int champ_count;
+    champion_t **champs;
+} parse_champion_flags_args_t;
+/// CODING STYLE ///
+
 /* utilities */
 int error_msg(char *str, int ret_value);
 int print_help(void);
