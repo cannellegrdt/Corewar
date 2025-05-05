@@ -12,6 +12,7 @@ SRC	=	src/create_champion.c	\
 		src/load_champion.c	\
 		src/op.c	\
 		src/parse_arguments.c	\
+		src/run_vm.c	\
 		src/utilities/error_msg.c	\
 		src/utilities/load_address.c	\
 		src/utilities/print_help.c	\

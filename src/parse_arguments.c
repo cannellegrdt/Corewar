@@ -157,6 +157,7 @@ int parse_arguments(int argc, char *argv[])
         free_vm(&vm);
         return 84;
     }
+    run_vm(&vm);
     free_vm(&vm);
     return 0;
 }
