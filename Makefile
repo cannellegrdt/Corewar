@@ -5,13 +5,18 @@
 ## Makefile
 ##
 
-SRC	=	src/creates.c	\
+SRC	=	src/create_champion.c	\
+		src/creates.c	\
 		src/dump_memory.c	\
 		src/init_and_free.c	\
+		src/load_champion.c	\
 		src/op.c	\
 		src/parse_arguments.c	\
 		src/utilities/error_msg.c	\
-		src/utilities/print_help.c
+		src/utilities/load_address.c	\
+		src/utilities/print_help.c	\
+		src/utilities/sort_process.c	\
+		src/utilities/swap_endian.c
 
 
 LIB_SRC	=	lib/my/my_getnbr.c	\

@@ -10,6 +10,8 @@
     #include "op.h"
     #include "my.h"
     #include <stdbool.h>
+    #include <unistd.h>
+    #include <stdlib.h>
 
 typedef unsigned char byte_t;
 
@@ -33,6 +35,7 @@ typedef struct process_s {
     bool carry;
     int wait_cycles;
     int current_op;
+    int last_live_cycle;
     bool alive;
     int current_op_args[MAX_ARGS_NUMBER];
     int current_op_arg_types[MAX_ARGS_NUMBER];
@@ -102,11 +105,20 @@ typedef struct {
 /* utilities */
 int error_msg(char *str, int ret_value);
 int print_help(void);
+int swap_endian(int value);
+void sort_processes_by_champion_number(vm_t *vm);
+int calculate_address(int base_address, int offset, bool apply_idx_mod);
 
 /* other functions */
 void initialize_vm(vm_t *vm);
 void free_vm(vm_t *vm);
 void free_champions(champion_t **champions, int count);
 int parse_arguments(int argc, char *argv[]);
+int read_champion_file(champion_t *champ);
+void create_process(vm_t *vm, champion_t *champ);
+int find_available_number(int next_number, int champ_count,
+    champion_t **champs);
+champion_t *init_champion(void);
+int load_champions(vm_t *vm);
 
 #endif //COREWAR_H
