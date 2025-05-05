@@ -51,10 +51,10 @@ static void initialize_op(vm_t *vm)
     vm->op_functions[8] = &op_zjmp;
     vm->op_functions[9] = &op_ldi;
     vm->op_functions[10] = &op_sti;
-    //vm->op_functions[11] = &op_fork;
+    vm->op_functions[11] = &op_fork;
     vm->op_functions[12] = &op_lld;
     vm->op_functions[13] = &op_lldi;
-    //vm->op_functions[14] = &op_lfork;
+    vm->op_functions[14] = &op_lfork;
     vm->op_functions[15] = &op_aff;
 }
 

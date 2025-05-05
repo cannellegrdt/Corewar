@@ -162,14 +162,14 @@ void op_ldi(process_t *process, byte_t *memory, champion_t **champions
     __attribute__((unused)), int champion_count __attribute__((unused)));
 void op_sti(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
-/*void op_fork(process_t *process, byte_t *memory, champion_t **champions,
-    int champion_count);*/
+void op_fork(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
 void op_lld(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_lldi(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
-/*void op_lfork(process_t *process, byte_t *memory, champion_t **champions,
-    int champion_count);*/
+void op_lfork(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
 void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
     champion_t **champions __attribute__((unused)), int champion_count
     __attribute__((unused)));

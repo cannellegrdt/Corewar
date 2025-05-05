@@ -20,8 +20,10 @@ SRC	=	src/create_champion.c	\
 		src/instructions/op_add.c	\
 		src/instructions/op_aff.c	\
 		src/instructions/op_and.c	\
+		src/instructions/op_fork.c	\
 		src/instructions/op_ld.c	\
 		src/instructions/op_ldi.c	\
+		src/instructions/op_lfork.c	\
 		src/instructions/op_live.c	\
 		src/instructions/op_lld.c	\
 		src/instructions/op_lldi.c	\
