@@ -9,25 +9,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-bool has_alive_process(vm_t *vm)
-{
-    process_t *current = vm->processes;
-
-    if (vm->cycle_to_die <= 0) {
-        for (int i = 0; i < vm->champion_count; i++) {
-            if (vm->champions[i]->lives_in_period > 0)
-                return true;
-        }
-        return false;
-    }
-    while (current) {
-        if (current->alive)
-            return true;
-        current = current->next;
-    }
-    return false;
-}
-
 static void update_wait_cycles_and_load_instructions(vm_t *vm)
 {
     process_t *current = vm->processes;

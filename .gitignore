@@ -5,6 +5,7 @@ a.out
 *.gcno
 *.gcda
 *.txt
+!outputs_tester/*.txt
 *.pdf
 exe
 libmy.a
@@ -17,4 +18,4 @@ coding-style-reports.log
 binaries
 champions
 attempt_corewar
-outputs_tester
+bonus
