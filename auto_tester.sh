@@ -29,7 +29,7 @@ for ((i=0; i<$total_champions; i++)); do
         attempt_file="$outputs_dir/${champ1_name}_${champ2_name}_attempt.txt"
         output_file="$outputs_dir/${champ1_name}_${champ2_name}_output.txt"
         
-        ./corewar $champions_dir/$champ1 $champions_dir/$champ2 > "$attempt_file"
+        ./corewar $champions_dir/$champ1 $champions_dir/$champ2 > "$output_file"
         
         if diff -q "$attempt_file" "$output_file" >/dev/null; then
             print_colored "OK" "$champ1" "$champ2"
