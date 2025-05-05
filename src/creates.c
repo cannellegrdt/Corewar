@@ -29,6 +29,18 @@ void create_process(vm_t *vm, champion_t *champ)
     vm->process_count++;
 }
 
+void init_decode_context(decode_context_t *ctx, vm_t *vm,
+    process_t *process, instruction_t *instruction)
+{
+    ctx->vm = vm;
+    ctx->pc = process->pc;
+    ctx->offset = 0;
+    ctx->opcode = instruction->op_code;
+    ctx->inst = instruction;
+    ctx->offset = 1;
+}
+
+
 champion_t *init_champion(void)
 {
     champion_t *champ = malloc(sizeof(champion_t));

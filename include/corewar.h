@@ -111,6 +111,12 @@ int calculate_address(int base_address, int offset, bool apply_idx_mod);
 void dump_memory(byte_t *memory);
 int read_short(byte_t *memory, int pos);
 int read_int(byte_t *memory, int pos);
+int get_register_value(process_t *process, int reg_num);
+bool set_register_value(process_t *process, int reg_num, int value);
+int read_memory(byte_t *memory, int address, int size);
+void write_memory(byte_t *memory, int address, int value, int size);
+int get_param_value(process_t *process, int param_type, int param_value,
+    byte_t *memory, bool is_modulo);
 
 /* other functions */
 void initialize_vm(vm_t *vm);
@@ -126,5 +132,46 @@ int load_champions(vm_t *vm);
 void run_vm(vm_t *vm);
 int decode_args(vm_t *vm, process_t *process);
 void execute_instruction(vm_t *vm, process_t *process);
+void init_decode_context(decode_context_t *ctx, vm_t *vm,
+    process_t *process, instruction_t *instruction);
+int get_param_type(decode_context_t *ctx, int param_index);
+bool read_param_value(decode_context_t *ctx, int arg_type,
+    int *arg_value);
+bool read_coding_byte(decode_context_t *ctx);
+
+/* instructions */
+void op_live(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_ld(process_t *process, byte_t *memory, champion_t **champions
+    __attribute__((unused)), int champion_count __attribute__((unused)));
+void op_st(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_add(process_t *process, byte_t *memory, champion_t **champions
+    __attribute__((unused)), int champion_count __attribute__((unused)));
+void op_sub(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_and(process_t *process, byte_t *memory, champion_t **champions
+    __attribute__((unused)), int champion_count __attribute__((unused)));
+void op_or(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_xor(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_zjmp(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_ldi(process_t *process, byte_t *memory, champion_t **champions
+    __attribute__((unused)), int champion_count __attribute__((unused)));
+void op_sti(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+/*void op_fork(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);*/
+void op_lld(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+void op_lldi(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);
+/*void op_lfork(process_t *process, byte_t *memory, champion_t **champions,
+    int champion_count);*/
+void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
+    champion_t **champions __attribute__((unused)), int champion_count
+    __attribute__((unused)));
 
 #endif //COREWAR_H

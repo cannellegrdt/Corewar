@@ -8,15 +8,32 @@
 SRC	=	src/create_champion.c	\
 		src/creates.c	\
 		src/decode_args.c	\
+		src/decode.c	\
 		src/dump_memory.c	\
 		src/init_and_free.c	\
 		src/instructions.c	\
 		src/load_champion.c	\
 		src/op.c	\
 		src/parse_arguments.c	\
+		src/read.c	\
 		src/run_vm.c	\
+		src/instructions/op_add.c	\
+		src/instructions/op_aff.c	\
+		src/instructions/op_and.c	\
+		src/instructions/op_ld.c	\
+		src/instructions/op_ldi.c	\
+		src/instructions/op_live.c	\
+		src/instructions/op_lld.c	\
+		src/instructions/op_lldi.c	\
+		src/instructions/op_or.c	\
+		src/instructions/op_st.c	\
+		src/instructions/op_sti.c	\
+		src/instructions/op_sub.c	\
+		src/instructions/op_xor.c	\
+		src/instructions/op_zjmp.c	\
 		src/utilities/error_msg.c	\
 		src/utilities/load_address.c	\
+		src/utilities/op_utilities.c	\
 		src/utilities/print_help.c	\
 		src/utilities/read_short_int.c	\
 		src/utilities/sort_process.c	\
