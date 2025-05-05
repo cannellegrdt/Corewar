@@ -93,7 +93,7 @@ static void execute_sorted_instructions(vm_t *vm, process_t **processes_array, i
 {
     for (int i = 0; i < size; i++) {
         if (processes_array[i]->alive) {
-            //execute_instruction(vm, processes_array[i]);
+            execute_instruction(vm, processes_array[i]);
             processes_array[i]->current_op = -1;
         }
     }
@@ -106,7 +106,7 @@ static void execute_unsorted_instructions(vm_t *vm)
     while (current) {
         if (current->alive && current->wait_cycles == 0 &&
         current->current_op > 0) {
-            //execute_instruction(vm, current);
+            execute_instruction(vm, current);
             current->current_op = -1;
         }
         current = current->next;
@@ -189,7 +189,7 @@ void run_vm(vm_t *vm)
         }
         process = vm->processes;
         while (process) {
-            //execute_instruction((process->alive) ? vm : NULL, process);
+            execute_instruction((process->alive) ? vm : NULL, process);
             process = process->next;
         }
         vm->cycle_counter++;

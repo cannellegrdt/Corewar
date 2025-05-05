@@ -7,8 +7,10 @@
 
 SRC	=	src/create_champion.c	\
 		src/creates.c	\
+		src/decode_args.c	\
 		src/dump_memory.c	\
 		src/init_and_free.c	\
+		src/instructions.c	\
 		src/load_champion.c	\
 		src/op.c	\
 		src/parse_arguments.c	\
@@ -16,6 +18,7 @@ SRC	=	src/create_champion.c	\
 		src/utilities/error_msg.c	\
 		src/utilities/load_address.c	\
 		src/utilities/print_help.c	\
+		src/utilities/read_short_int.c	\
 		src/utilities/sort_process.c	\
 		src/utilities/swap_endian.c
 

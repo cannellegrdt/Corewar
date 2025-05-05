@@ -109,6 +109,8 @@ int swap_endian(int value);
 void sort_processes_by_champion_number(vm_t *vm);
 int calculate_address(int base_address, int offset, bool apply_idx_mod);
 void dump_memory(byte_t *memory);
+int read_short(byte_t *memory, int pos);
+int read_int(byte_t *memory, int pos);
 
 /* other functions */
 void initialize_vm(vm_t *vm);
@@ -122,5 +124,7 @@ int find_available_number(int next_number, int champ_count,
 champion_t *init_champion(void);
 int load_champions(vm_t *vm);
 void run_vm(vm_t *vm);
+int decode_args(vm_t *vm, process_t *process);
+void execute_instruction(vm_t *vm, process_t *process);
 
 #endif //COREWAR_H
