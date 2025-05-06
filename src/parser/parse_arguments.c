@@ -28,14 +28,14 @@ static int cleanup_and_return_error(champion_t *current_champ,
     return error_msg(error_msg_text, 84);
 }
 
-static int assign_champion_number(champion_t *champ, int *next_number,
+static int assign_champion_number(champion_t *champ, int *next_num,
     int champ_count, champion_t **champs)
 {
     if (champ->number == -1) {
-        *next_number = find_available_number(*next_number, champ_count,
+        *next_num = find_available_number(*next_num, champ_count,
         champs);
-        champ->number = *next_number;
-        (*next_number)++;
+        champ->number = *next_num;
+        (*next_num)++;
     }
     return 0;
 }
@@ -43,6 +43,7 @@ static int assign_champion_number(champion_t *champ, int *next_number,
 static int process_single_champion(process_single_champion_args_t args)
 {
     champion_t *champ = init_champion();
+    int next_num = 1;
 
     if (!champ)
         return cleanup_and_return_error(NULL, args.champs, *args.champ_count,
@@ -57,8 +58,7 @@ static int process_single_champion(process_single_champion_args_t args)
         "Error: champion filename expected.\n");
     champ->filename = my_strdup(args.argv[*args.i]);
     (*args.i)++;
-    assign_champion_number(champ, args.next_number, *args.champ_count,
-        args.champs);
+    assign_champion_number(champ, &next_num, *args.champ_count, args.champs);
     args.champs[*args.champ_count] = champ;
     (*args.champ_count)++;
     return 0;
@@ -69,14 +69,13 @@ int parse_champions(int i, int argc, char **argv, vm_t *vm)
     int capacity = (argc - i) / 2 + 1;
     champion_t **champs = allocate_champions_array(capacity);
     int champ_count = 0;
-    int next_number = 1;
     int result;
 
     if (!champs)
         return error_msg("Error: memory allocation failed.\n", 84);
     while (i < argc) {
         result = process_single_champion((process_single_champion_args_t){
-            &i, argc, argv, champs, &champ_count, &next_number});
+            &i, argc, argv, champs, &champ_count});
         if (result != 0)
             return result;
     }

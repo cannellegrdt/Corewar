@@ -115,8 +115,13 @@ typedef struct process_single_champion_args_s {
     char **argv;
     champion_t **champs;
     int *champ_count;
-    int *next_number;
 } process_single_champion_args_t;
+
+typedef struct {
+    vm_t *vm;
+    process_t *process;
+    int arg_index;
+} arg_reader_t;
 /// CODING STYLE ///
 
 /* utilities */

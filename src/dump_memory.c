@@ -25,8 +25,6 @@ void dump_memory(byte_t *memory)
         if (i % 32 == 0 && i > 0)
             write(1, "\n", 1);
         print_hex_byte(memory[i]);
-        if ((i + 1) % 32 != 0)
-            write(1, " ", 1);
     }
     write(1, "\n", 1);
 }

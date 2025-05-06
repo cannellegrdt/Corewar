@@ -7,6 +7,7 @@
 
 #include "corewar.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void calculate_load_addresses(vm_t *vm)
 {
@@ -68,22 +69,20 @@ int load_champions(vm_t *vm)
     return 0;
 }
 
+bool is_number_used(int number, int champ_count,
+    champion_t **champs)
+{
+    for (int j = 0; j < champ_count; j++) {
+        if (champs[j]->number == number)
+            return true;
+    }
+    return false;
+}
+
 int find_available_number(int next_number, int champ_count,
     champion_t **champs)
 {
-    bool used;
-
-    while (1) {
-        used = false;
-        for (int j = 0; j < champ_count; j++) {
-            if (champs[j]->number == next_number) {
-                used = true;
-                break;
-            }
-        }
-        if (!used)
-            break;
+    while (is_number_used(next_number, champ_count, champs))
         next_number++;
-    }
     return next_number;
 }

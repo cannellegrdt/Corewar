@@ -7,26 +7,35 @@
 
 #include "corewar.h"
 
+static void update_process_wait_cycle(process_t *process, byte_t opcode)
+{
+    if (opcode >= 1 && opcode <= 16) {
+        process->current_op = opcode;
+        process->wait_cycles = op_tab[opcode - 1].nbr_cycles - 1;
+    } else
+        process->pc = (process->pc + 1) % MEM_SIZE;
+}
+
+static void handle_process(vm_t *vm, process_t *process)
+{
+    byte_t opcode;
+
+    if (!process->alive)
+        return;
+    if (process->wait_cycles > 0) {
+        process->wait_cycles--;
+    } else if (process->current_op == -1) {
+        opcode = vm->memory[process->pc % MEM_SIZE];
+        update_process_wait_cycle(process, opcode);
+    }
+}
+
 void update_wait_cycles_and_load_instructions(vm_t *vm)
 {
     process_t *current = vm->processes;
-    byte_t opcode;
 
     while (current) {
-        if (!current->alive) {
-            current = current->next;
-            continue;
-        }
-        if (current->wait_cycles > 0) {
-            current->wait_cycles--;
-        } else if (current->current_op == -1) {
-            opcode = vm->memory[current->pc % MEM_SIZE];
-            if (opcode >= 1 && opcode <= 16) {
-                current->current_op = opcode;
-                current->wait_cycles = op_tab[opcode - 1].nbr_cycles - 1;
-            } else
-                current->pc = (current->pc + 1) % MEM_SIZE;
-        }
+        handle_process(vm, current);
         current = current->next;
     }
 }
@@ -63,18 +72,24 @@ static void fill_execution_array(vm_t *vm, process_t **processes_array,
 
 void sort_processes_by_champion(process_t **processes_array, int size)
 {
+    bool swapped;
     process_t *temp;
 
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (processes_array[j]->champion_number >
-                processes_array[j + 1]->champion_number) {
-                temp = processes_array[j];
-                processes_array[j] = processes_array[j + 1];
-                processes_array[j + 1] = temp;
-            }
+    do {
+        swapped = false;
+        for (int j = 0; j < size - 1; j++) {
+            temp = processes_array[j + 1];
+            processes_array[j + 1] =
+                (processes_array[j]->champion_number > temp->champion_number) ?
+                processes_array[j] : temp;
+            processes_array[j] =
+                (processes_array[j]->champion_number > temp->champion_number)
+                ? temp : processes_array[j];
+            swapped = swapped ||
+                (processes_array[j]->champion_number > temp->champion_number);
         }
-    }
+        size--;
+    } while (swapped);
 }
 
 static void execute_sorted_instructions(vm_t *vm, process_t **processes_array,

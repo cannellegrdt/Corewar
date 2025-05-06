@@ -24,22 +24,31 @@ static void write_win_message(vm_t *vm)
     }
 }
 
-void run_vm(vm_t *vm)
+static bool should_dump_memory(vm_t *vm)
+{
+    return (vm->options.dump_flag &&
+        vm->cycle_counter > 0 &&
+        vm->cycle_counter % vm->options.dump_cycle == 0);
+}
+
+static void execute_all_processes(vm_t *vm)
+{
+    process_t *process = vm->processes;
+
+    while (process) {
+        execute_instruction((process->alive) ? vm : NULL, process);
+        process = process->next;
+    }
+}
+
+void run_vm_cycle(vm_t *vm)
 {
     int next_check = vm->cycle_to_die;
-    process_t *process;
 
     while (vm->process_count > 0) {
-        if (vm->options.dump_flag &&
-            vm->cycle_counter == vm->options.dump_cycle) {
+        if (should_dump_memory(vm))
             dump_memory(vm->memory);
-            break;
-        }
-        process = vm->processes;
-        while (process) {
-            execute_instruction((process->alive) ? vm : NULL, process);
-            process = process->next;
-        }
+        execute_all_processes(vm);
         vm->cycle_counter++;
         if (vm->cycle_counter < next_check)
             continue;
@@ -48,6 +57,11 @@ void run_vm(vm_t *vm)
             break;
         next_check = vm->cycle_counter + vm->cycle_to_die;
     }
+}
+
+void run_vm(vm_t *vm)
+{
+    run_vm_cycle(vm);
     if (vm->last_alive_champion > 0)
         write_win_message(vm);
 }
