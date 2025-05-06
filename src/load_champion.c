@@ -30,6 +30,8 @@ static void free_loaded_champions_code(vm_t *vm, int up_to_index)
 
 static int load_single_champion(vm_t *vm, champion_t *champ, int index)
 {
+    int address;
+
     if (!champ) {
         free_loaded_champions_code(vm, index - 1);
         return error_msg("Error: invalid champion.\n", 84);
@@ -43,7 +45,7 @@ static int load_single_champion(vm_t *vm, champion_t *champ, int index)
         return error_msg("Error: champion code is too large.\n", 84);
     }
     for (int j = 0; j < champ->size; j++) {
-        int address = calculate_address(champ->load_address, j, false);
+        address = calculate_address(champ->load_address, j, false);
         vm->memory[address] = champ->code[j];
     }
     create_process(vm, champ);

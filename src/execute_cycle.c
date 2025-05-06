@@ -10,19 +10,22 @@
 void update_wait_cycles_and_load_instructions(vm_t *vm)
 {
     process_t *current = vm->processes;
+    byte_t opcode;
 
     while (current) {
-        if (current->alive) {
-            if (current->wait_cycles > 0) {
-                current->wait_cycles--;
-            } else if (current->current_op == -1) {
-                byte_t opcode = vm->memory[current->pc % MEM_SIZE];
-                if (opcode >= 1 && opcode <= 16) {
-                    current->current_op = opcode;
-                    current->wait_cycles = op_tab[opcode - 1].nbr_cycles - 1;
-                } else
-                    current->pc = (current->pc + 1) % MEM_SIZE;
-            }
+        if (!current->alive) {
+            current = current->next;
+            continue;
+        }
+        if (current->wait_cycles > 0) {
+            current->wait_cycles--;
+        } else if (current->current_op == -1) {
+            opcode = vm->memory[current->pc % MEM_SIZE];
+            if (opcode >= 1 && opcode <= 16) {
+                current->current_op = opcode;
+                current->wait_cycles = op_tab[opcode - 1].nbr_cycles - 1;
+            } else
+                current->pc = (current->pc + 1) % MEM_SIZE;
         }
         current = current->next;
     }
@@ -34,20 +37,23 @@ static int count_ready_processes(vm_t *vm)
     process_t *current = vm->processes;
 
     while (current) {
-        if (current->alive && current->wait_cycles == 0 && current->current_op > 0)
+        if (current->alive && current->wait_cycles == 0 &&
+            current->current_op > 0)
             execution_count++;
         current = current->next;
     }
     return execution_count;
 }
 
-static void fill_execution_array(vm_t *vm, process_t **processes_array, int array_size)
+static void fill_execution_array(vm_t *vm, process_t **processes_array,
+    int array_size)
 {
     int idx = 0;
     process_t *current = vm->processes;
 
     while (current && idx < array_size) {
-        if (current->alive && current->wait_cycles == 0 && current->current_op > 0) {
+        if (current->alive && current->wait_cycles == 0 &&
+            current->current_op > 0) {
             processes_array[idx] = current;
             idx++;
         }
@@ -57,10 +63,13 @@ static void fill_execution_array(vm_t *vm, process_t **processes_array, int arra
 
 void sort_processes_by_champion(process_t **processes_array, int size)
 {
+    process_t *temp;
+
     for (int i = 0; i < size - 1; i++) {
         for (int j = 0; j < size - i - 1; j++) {
-            if (processes_array[j]->champion_number > processes_array[j + 1]->champion_number) {
-                process_t *temp = processes_array[j];
+            if (processes_array[j]->champion_number >
+                processes_array[j + 1]->champion_number) {
+                temp = processes_array[j];
                 processes_array[j] = processes_array[j + 1];
                 processes_array[j + 1] = temp;
             }
@@ -68,7 +77,8 @@ void sort_processes_by_champion(process_t **processes_array, int size)
     }
 }
 
-static void execute_sorted_instructions(vm_t *vm, process_t **processes_array, int size)
+static void execute_sorted_instructions(vm_t *vm, process_t **processes_array,
+    int size)
 {
     for (int i = 0; i < size; i++) {
         if (processes_array[i]->alive) {

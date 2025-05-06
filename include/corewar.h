@@ -108,6 +108,15 @@ typedef struct {
     byte_t *memory;
     bool is_modulo;
 } get_param_value_args_t;
+
+typedef struct process_single_champion_args_s {
+    int *i;
+    int argc;
+    char **argv;
+    champion_t **champs;
+    int *champ_count;
+    int *next_number;
+} process_single_champion_args_t;
 /// CODING STYLE ///
 
 /* utilities */
@@ -140,6 +149,8 @@ champion_t *init_champion(void);
 int load_champions(vm_t *vm);
 void run_vm(vm_t *vm);
 int decode_args(vm_t *vm, process_t *process);
+int decode_args_with_coding_byte(vm_t *vm, process_t *process,
+    const op_t *op, int offset);
 void execute_instruction(vm_t *vm, process_t *process);
 void init_decode_context(decode_context_t *ctx, vm_t *vm,
     process_t *process, instruction_t *instruction);
@@ -183,4 +194,11 @@ void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
     champion_t **champions __attribute__((unused)), int champion_count
     __attribute__((unused)));
 
+/* parser */
+int parse_arguments(int argc, char *argv[]);
+int parse_champions(int i, int argc, char **argv, vm_t *vm);
+int parse_champion_flags(parse_champion_flags_args_t args);
+int parse_dump_flag(int *i, int argc, char **argv, vm_t *vm);
+int parse_n_flag(parse_n_flag_args_t *args);
+int parse_a_flag(int *i, int argc, char **argv, champion_t *champ);
 #endif //COREWAR_H

@@ -9,12 +9,12 @@ SRC	=	src/create_champion.c	\
 		src/creates.c	\
 		src/decode_args.c	\
 		src/decode.c	\
+		src/decode_args_with_coding_byte.c	\
 		src/dump_memory.c	\
 		src/init_and_free.c	\
 		src/instructions.c	\
 		src/load_champion.c	\
 		src/op.c	\
-		src/parse_arguments.c	\
 		src/read.c	\
 		src/run_vm.c	\
 		src/check_lives.c 	\
@@ -41,7 +41,12 @@ SRC	=	src/create_champion.c	\
 		src/utilities/print_help.c	\
 		src/utilities/read_short_int.c	\
 		src/utilities/sort_process.c	\
-		src/utilities/swap_endian.c
+		src/utilities/swap_endian.c 	\
+		src/parser/parse_arguments.c	\
+		src/parser/parse_champion_flags.c	\
+		src/parser/parse_a_flag.c	\
+		src/parser/parse_n_flag.c	\
+		src/parser/parse_dump_flag.c
 
 
 LIB_SRC	=	lib/my/my_getnbr.c	\
