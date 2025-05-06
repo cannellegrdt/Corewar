@@ -100,6 +100,14 @@ typedef struct {
     int champ_count;
     champion_t **champs;
 } parse_champion_flags_args_t;
+
+typedef struct {
+    process_t *process;
+    int param_type;
+    int param_value;
+    byte_t *memory;
+    bool is_modulo;
+} get_param_value_args_t;
 /// CODING STYLE ///
 
 /* utilities */
@@ -115,8 +123,9 @@ int get_register_value(process_t *process, int reg_num);
 bool set_register_value(process_t *process, int reg_num, int value);
 int read_memory(byte_t *memory, int address, int size);
 void write_memory(byte_t *memory, int address, int value, int size);
-int get_param_value(process_t *process, int param_type, int param_value,
-    byte_t *memory, bool is_modulo);
+int get_param_value(get_param_value_args_t args);
+void check_lives(vm_t *vm);
+void execute_cycle(vm_t *vm);
 
 /* other functions */
 void initialize_vm(vm_t *vm);

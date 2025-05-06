@@ -50,8 +50,7 @@ void sort_processes_by_champion_number(vm_t *vm)
         while (ptr1->next != lptr) {
             pred = (ptr1 != vm->processes) ?
             find_predecessor(vm->processes, ptr1) : NULL;
-            if (ptr1->champion_number > ptr1->next->champion_number)
-                swapped = true;
+            swapped = (ptr1->champion_number > ptr1->next->champion_number);
             ptr1 = (ptr1->champion_number > ptr1->next->champion_number) ?
             swap_adjacent_processes(vm, ptr1, pred) : ptr1->next;
         }

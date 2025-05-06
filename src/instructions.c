@@ -31,11 +31,6 @@ int get_param_type(decode_context_t *ctx, int param_index)
     }
 }
 
-static bool is_valid_opcode(byte_t opcode)
-{
-    return (opcode >= 1 && opcode <= 16);
-}
-
 static void initialize_wait_cycles(process_t *process, byte_t opcode)
 {
     if (process->wait_cycles == 0) {
@@ -87,7 +82,7 @@ void execute_instruction(vm_t *vm, process_t *process)
     if (!vm || !process)
         return;
     opcode = vm->memory[process->pc];
-    if (is_valid_opcode(opcode)) {
+    if (opcode >= 1 && opcode <= 16) {
         initialize_wait_cycles(process, opcode);
         if (decrease_wait_cycles(process)) {
             instruction_size = perform_operation(vm, process, opcode);

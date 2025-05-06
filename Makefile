@@ -17,6 +17,8 @@ SRC	=	src/create_champion.c	\
 		src/parse_arguments.c	\
 		src/read.c	\
 		src/run_vm.c	\
+		src/check_lives.c 	\
+		src/execute_cycle.c \
 		src/instructions/op_add.c	\
 		src/instructions/op_aff.c	\
 		src/instructions/op_and.c	\

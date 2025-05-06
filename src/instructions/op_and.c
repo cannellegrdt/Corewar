@@ -16,17 +16,16 @@ void op_and(process_t *process, byte_t *memory, champion_t **champions
     int arg1_value = process->current_op_args[0];
     int arg2_value = process->current_op_args[1];
     int arg3_value = process->current_op_args[2];
-    int value1;
-    int value2;
     int result;
 
     if (!(arg1_type & (T_REG | T_DIR | T_IND)) ||
     !(arg2_type & (T_REG | T_DIR | T_IND)) || arg3_type != T_REG ||
     arg3_value < 1 || arg3_value > REG_NUMBER)
         return;
-    value1 = get_param_value(process, arg1_type, arg1_value, memory, true);
-    value2 = get_param_value(process, arg2_type, arg2_value, memory, true);
-    result = value1 & value2;
+    result = get_param_value((get_param_value_args_t)
+        {process, arg1_type, arg1_value, memory, true}) &
+        get_param_value((get_param_value_args_t)
+        {process, arg2_type, arg2_value, memory, true});
     set_register_value(process, arg3_value, result);
     process->carry = (result == 0);
 }

@@ -7,14 +7,6 @@
 
 #include "corewar.h"
 
-static void initialize_arg_arrays(process_t *process)
-{
-    for (int i = 0; i < MAX_ARGS_NUMBER; i++) {
-        process->current_op_arg_types[i] = 0;
-        process->current_op_args[i] = 0;
-    }
-}
-
 static int convert_arg_code_to_type(int arg_code)
 {
     switch (arg_code) {
@@ -32,18 +24,16 @@ static int convert_arg_code_to_type(int arg_code)
 static int read_register_arg(vm_t *vm, process_t *process, int i, int offset)
 {
     process->current_op_args[i] = vm->memory[(process->pc + offset) %
-    MEM_SIZE];
-    if (!(process->current_op_args[i] >= 1 &&
-    process->current_op_args[i] <= REG_NUMBER))
-        return offset + 1;
+        MEM_SIZE];
     return offset + 1;
 }
 
-static int read_direct_arg(vm_t *vm, process_t *process, int i, int offset,
-    byte_t opcode)
+static int read_direct_arg(vm_t *vm, process_t *process, int i, int offset)
 {
-    int dir_size = (opcode == 9 || opcode == 10 || opcode == 11 ||
-    opcode == 14) ? 2 : 4;
+    int dir_size = (vm->memory[process->pc] == 9 ||
+        vm->memory[process->pc] == 10 ||
+        vm->memory[process->pc] == 11 ||
+        vm->memory[process->pc] == 14) ? 2 : 4;
 
     if (dir_size == 2)
         process->current_op_args[i] = read_short(vm->memory,
@@ -65,11 +55,12 @@ static int decode_args_with_coding_byte(vm_t *vm, process_t *process,
 {
     byte_t coding_byte = vm->memory[(process->pc + offset) % MEM_SIZE];
     int start_offset = offset;
+    int arg_type;
 
     offset++;
     for (int i = 0; i < op->nbr_args; i++) {
-        int arg_type = convert_arg_code_to_type((coding_byte >> (6 - 2 * i))
-        & 0x3);
+        arg_type = convert_arg_code_to_type((coding_byte >> (6 - 2 * i))
+            & 0x3);
         if (arg_type == 0 || !((arg_type & op->type[i]) != 0))
             return start_offset + 1;
         process->current_op_arg_types[i] = arg_type;
@@ -79,7 +70,7 @@ static int decode_args_with_coding_byte(vm_t *vm, process_t *process,
             process->current_op_args[i] <= REG_NUMBER))
                 return offset;
         } else if (arg_type == T_DIR)
-            offset = read_direct_arg(vm, process, i, offset, vm->memory[process->pc]);
+            offset = read_direct_arg(vm, process, i, offset);
         else if (arg_type == T_IND)
             offset = read_indirect_arg(vm, process, i, offset);
     }
@@ -112,7 +103,10 @@ int decode_args(vm_t *vm, process_t *process)
         return 1;
     op = &op_tab[opcode - 1];
     offset = 1;
-    initialize_arg_arrays(process);
+    for (int i = 0; i < MAX_ARGS_NUMBER; i++) {
+        process->current_op_arg_types[i] = 0;
+        process->current_op_args[i] = 0;
+    }
     if (opcode != 1 && opcode != 9 && opcode != 12 && opcode != 15)
         offset = decode_args_with_coding_byte(vm, process, op, offset);
     else

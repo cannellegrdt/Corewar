@@ -45,19 +45,19 @@ void write_memory(byte_t *memory, int address, int value, int size)
     }
 }
 
-int get_param_value(process_t *process, int param_type, int param_value,
-    byte_t *memory, bool is_modulo)
+int get_param_value(get_param_value_args_t args)
 {
     int address;
 
-    switch (param_type) {
+    switch (args.param_type) {
         case T_REG:
-            return get_register_value(process, param_value);
+            return get_register_value(args.process, args.param_value);
         case T_DIR:
-            return param_value;
+            return args.param_value;
         case T_IND:
-            address = calculate_address(process->pc, param_value, is_modulo);
-            return read_memory(memory, address, DIR_SIZE);
+            address = calculate_address(args.process->pc,
+                args.param_value, args.is_modulo);
+            return read_memory(args.memory, address, DIR_SIZE);
         default:
             return 0;
     }

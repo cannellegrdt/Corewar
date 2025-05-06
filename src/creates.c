@@ -40,7 +40,6 @@ void init_decode_context(decode_context_t *ctx, vm_t *vm,
     ctx->offset = 1;
 }
 
-
 champion_t *init_champion(void)
 {
     champion_t *champ = malloc(sizeof(champion_t));

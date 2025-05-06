@@ -24,8 +24,10 @@ void op_sti(process_t *process, byte_t *memory, champion_t **champions
     if (arg1_type != T_REG || arg1_value < 1 || arg1_value > REG_NUMBER)
         return;
     register_value = get_register_value(process, arg1_value);
-    value2 = get_param_value(process, arg2_type, arg2_value, memory, true);
-    value3 = get_param_value(process, arg3_type, arg3_value, memory, true);
+    value2 = get_param_value((get_param_value_args_t)
+        {process, arg2_type, arg2_value, memory, true});
+    value3 = get_param_value((get_param_value_args_t)
+        {process, arg3_type, arg3_value, memory, true});
     address = calculate_address(process->pc, (value2 + value3), true);
     write_memory(memory, address, register_value, REG_SIZE);
 }
