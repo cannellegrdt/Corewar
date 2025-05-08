@@ -55,7 +55,8 @@ LIB_SRC	=	lib/my/my_getnbr.c	\
 		lib/my/my_strcmp.c	\
 		lib/my/my_strdup.c	\
 		lib/my/my_strlen.c	\
-		lib/my/my_strncpy.c
+		lib/my/my_strncpy.c	\
+		lib/my/endswith.c
 
 MAIN_SRC	= main.c
 

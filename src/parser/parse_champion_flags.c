@@ -7,7 +7,7 @@
 
 #include "corewar.h"
 
-int parse_champion_flags(parse_champion_flags_args_t args)
+int parse_champion_flags(parse_champion_flags_args_t args, vm_t *vm)
 {
     parse_n_flag_args_t n_args = {args.i, args.argc, args.argv,
         args.champ, args.champ_count, args.champs};
@@ -17,11 +17,18 @@ int parse_champion_flags(parse_champion_flags_args_t args)
             parse_n_flag(&n_args) != 0)
             return 84;
         if (!my_strcmp(args.argv[*args.i], "-a") &&
-            parse_a_flag(args.i, args.argc, args.argv, args.champ) != 0)
+            parse_a_flag(&n_args) != 0)
             return 84;
-        if (!my_strcmp(args.argv[*args.i], "-n") &&
-            !my_strcmp(args.argv[*args.i], "-a"))
+        if (!my_strcmp(args.argv[*args.i], "-dump") &&
+            parse_dump_flag(&n_args, vm) != 0)
+            return 84;
+        if (my_strcmp(args.argv[*args.i], "-n") &&
+            my_strcmp(args.argv[*args.i], "-a") &&
+            my_strcmp(args.argv[*args.i], "-dump"))
             break;
+        if (*args.i >= args.argc)
+            return error_msg(
+            "Error: champion filename expected after options.\n", 84);
     }
     return 0;
 }

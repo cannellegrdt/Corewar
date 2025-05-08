@@ -58,13 +58,12 @@ void debug_print_champion_addresses(vm_t *vm)
 {
     printf("=== DEBUG: Champion load addresses ===\n");
     for (int i = 0; i < vm->champion_count; i++) {
-        printf("Champion %d (%s): Address 0x%04X (decimal: %d)\n",
+        printf("Champion %d : Address 0x%04X (decimal: %d)\n",
                vm->champions[i]->number,
-               vm->champions[i]->name,
                vm->champions[i]->load_address,
                vm->champions[i]->load_address);
     }
-    printf("================================\n");
+    printf("======================================\n");
 }
 */
 int load_champions(vm_t *vm)

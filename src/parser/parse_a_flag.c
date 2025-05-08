@@ -7,21 +7,21 @@
 
 #include "corewar.h"
 
-int parse_a_flag(int *i, int argc, char **argv, champion_t *champ)
+int parse_a_flag(parse_n_flag_args_t *args)
 {
     int address;
     char *arg;
 
-    if (*i + 1 >= argc)
+    if (*args->i + 1 >= args->argc)
         return error_msg("Error: -a requires an address.\n", 84);
-    arg = argv[*i + 1];
+    arg = args->argv[*args->i + 1];
     if (verify_validity_arg(arg) == 84)
         return 84;
     address = my_getnbr(arg);
     if (address < 0 || address >= MEM_SIZE)
         return error_msg("Error: address must be between 0 and MEM_SIZE-1.\n",
             84);
-    champ->load_address = address;
-    *i += 2;
+    args->champ->load_address = address;
+    *args->i += 2;
     return 0;
 }

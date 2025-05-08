@@ -203,8 +203,8 @@ void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
 /* parser */
 int parse_arguments(int argc, char *argv[]);
 int parse_champions(int i, int argc, char **argv, vm_t *vm);
-int parse_champion_flags(parse_champion_flags_args_t args);
-int parse_dump_flag(int *i, int argc, char **argv, vm_t *vm);
+int parse_champion_flags(parse_champion_flags_args_t args, vm_t *vm);
+int parse_dump_flag(parse_n_flag_args_t *args, vm_t *vm);
 int parse_n_flag(parse_n_flag_args_t *args);
-int parse_a_flag(int *i, int argc, char **argv, champion_t *champ);
+int parse_a_flag(parse_n_flag_args_t *args);
 #endif //COREWAR_H
