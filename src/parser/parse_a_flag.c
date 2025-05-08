@@ -9,11 +9,24 @@
 
 int parse_a_flag(int *i, int argc, char **argv, champion_t *champ)
 {
+    int address;
+    char *arg;
+    int j = 0;
+
     if (*i + 1 >= argc)
         return error_msg("Error: -a requires an address.\n", 84);
-    champ->load_address = my_getnbr(argv[*i + 1]) % MEM_SIZE;
-    if (champ->load_address < 0)
-        champ->load_address += MEM_SIZE;
+    arg = argv[*i + 1];
+    j += (arg[j] == '-' || arg[j] == '+') ? 1 : 0;
+    while (arg[j]) {
+        if (arg[j] < '0' || arg[j] > '9')
+            return error_msg("Error: not a number.\n", 84);
+        j++;
+    }
+    address = my_getnbr(arg);
+    if (address < 0 || address >= MEM_SIZE)
+        return error_msg("Error: address must be between 0 and MEM_SIZE-1.\n",
+            84);
+    champ->load_address = address;
     *i += 2;
     return 0;
 }
