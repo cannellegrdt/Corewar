@@ -146,6 +146,7 @@ void initialize_vm(vm_t *vm);
 void free_vm(vm_t *vm);
 void free_champions(champion_t **champions, int count);
 int parse_arguments(int argc, char *argv[]);
+int verify_validity_arg(char *arg);
 int read_champion_file(champion_t *champ);
 void create_process(vm_t *vm, champion_t *champ);
 int find_available_number(int next_number, int champ_count,
