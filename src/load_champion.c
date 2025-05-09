@@ -73,7 +73,6 @@ int load_champions(vm_t *vm)
     if (!(vm && vm->champions && vm->champion_count > 0))
         return error_msg("Error: invalid virtual machine state.\n", 84);
     calculate_load_addresses(vm);
-    //debug_print_champion_addresses(vm);
     for (int i = 0; i < vm->champion_count; i++) {
         result = load_single_champion(vm, vm->champions[i], i);
         if (result != 0)

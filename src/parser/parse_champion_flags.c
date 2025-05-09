@@ -13,11 +13,9 @@ int parse_champion_flags(parse_champion_flags_args_t args, vm_t *vm)
         args.champ, args.champ_count, args.champs};
 
     while (*args.i < args.argc && (args.argv[*args.i][0] == '-')) {
-        if (!my_strcmp(args.argv[*args.i], "-n") &&
-            parse_n_flag(&n_args) != 0)
+        if (!my_strcmp(args.argv[*args.i], "-n") && parse_n_flag(&n_args) != 0)
             return 84;
-        if (!my_strcmp(args.argv[*args.i], "-a") &&
-            parse_a_flag(&n_args) != 0)
+        if (!my_strcmp(args.argv[*args.i], "-a") && parse_a_flag(&n_args) != 0)
             return 84;
         if (!my_strcmp(args.argv[*args.i], "-dump") &&
             parse_dump_flag(&n_args, vm) != 0)

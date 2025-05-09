@@ -40,7 +40,8 @@ static int assign_champion_number(champion_t *champ, int *next_num,
     return 0;
 }
 
-static int process_single_champion(process_single_champion_args_t args, vm_t *vm)
+static int process_single_champion(process_single_champion_args_t args,
+    vm_t *vm)
 {
     champion_t *champ = init_champion();
     int next_num = 1;
@@ -48,9 +49,8 @@ static int process_single_champion(process_single_champion_args_t args, vm_t *vm
     if (!champ)
         return cleanup_and_return_error(NULL, args.champs, *args.champ_count,
         "Error: memory allocation failed.\n");
-    if (parse_champion_flags((parse_champion_flags_args_t)
-        {args.i, args.argc, args.argv, champ, *args.champ_count, args.champs}, vm)
-        != 0)
+    if (parse_champion_flags((parse_champion_flags_args_t){args.i, args.argc,
+        args.argv, champ, *args.champ_count, args.champs}, vm) != 0)
         return cleanup_and_return_error(champ, args.champs, *args.champ_count,
             NULL);
     if (*args.i >= args.argc)
