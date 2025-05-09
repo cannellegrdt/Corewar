@@ -22,6 +22,7 @@ void create_process(vm_t *vm, champion_t *champ)
     process->carry = false;
     process->wait_cycles = 0;
     process->current_op = -1;
+    process->last_live_cycle = vm->cycle_counter;
     process->alive = true;
     process->next = vm->processes;
     process->vm = vm;
