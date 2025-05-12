@@ -41,7 +41,7 @@ static void execute_all_processes(vm_t *vm)
     }
 }
 
-void run_vm_cycle(vm_t *vm)
+static void run_vm_cycle(vm_t *vm)
 {
     int next_check = vm->cycle_to_die;
 

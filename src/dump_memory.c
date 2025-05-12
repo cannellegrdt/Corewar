@@ -8,7 +8,7 @@
 #include "corewar.h"
 #include <unistd.h>
 
-void print_hex_byte(byte_t byte)
+static void print_hex_byte(byte_t byte)
 {
     char hex_chars[] = "0123456789ABCDEF";
     char hex[3];

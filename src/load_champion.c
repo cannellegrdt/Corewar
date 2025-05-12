@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void calculate_load_addresses(vm_t *vm)
+static void calculate_load_addresses(vm_t *vm)
 {
     int spacing = MEM_SIZE / vm->champion_count;
 
@@ -82,7 +82,7 @@ int load_champions(vm_t *vm)
     return 0;
 }
 
-bool is_number_used(int number, int champ_count,
+static bool is_number_used(int number, int champ_count,
     champion_t **champs)
 {
     for (int j = 0; j < champ_count; j++) {

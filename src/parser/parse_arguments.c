@@ -10,15 +10,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static champion_t **allocate_champions_array(int capacity)
-{
-    champion_t **champs = malloc(sizeof(champion_t *) * capacity);
-
-    if (!champs)
-        return NULL;
-    return champs;
-}
-
 static int cleanup_and_return_error(champion_t *current_champ,
     champion_t **champs, int champ_count, char *error_msg_text)
 {
@@ -67,10 +58,10 @@ static int process_single_champion(process_single_champion_args_t args,
     return 0;
 }
 
-int parse_champions(int i, int argc, char **argv, vm_t *vm)
+static int parse_champions(int i, int argc, char **argv, vm_t *vm)
 {
     int capacity = argc;
-    champion_t **champs = allocate_champions_array(capacity);
+    champion_t **champs = malloc(sizeof(champion_t *) * capacity);
     int champ_count = 0;
     int result;
 

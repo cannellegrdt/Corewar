@@ -139,14 +139,11 @@ int read_memory(byte_t *memory, int address, int size);
 void write_memory(byte_t *memory, int address, int value, int size);
 int get_param_value(get_param_value_args_t args);
 void check_lives(vm_t *vm);
-void execute_cycle(vm_t *vm);
 
 /* other functions */
 void initialize_vm(vm_t *vm);
 void free_vm(vm_t *vm);
 void free_champions(champion_t **champions, int count);
-int parse_arguments(int argc, char *argv[]);
-int verify_validity_arg(char *arg);
 int read_champion_file(champion_t *champ);
 void create_process(vm_t *vm, champion_t *champ);
 int find_available_number(int next_number, int champ_count,
@@ -160,7 +157,6 @@ int decode_args_with_coding_byte(vm_t *vm, process_t *process,
 void execute_instruction(vm_t *vm, process_t *process);
 void init_decode_context(decode_context_t *ctx, vm_t *vm,
     process_t *process, instruction_t *instruction);
-int get_param_type(decode_context_t *ctx, int param_index);
 bool read_param_value(decode_context_t *ctx, int arg_type,
     int *arg_value);
 bool read_coding_byte(decode_context_t *ctx);
@@ -202,9 +198,5 @@ void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
 
 /* parser */
 int parse_arguments(int argc, char *argv[]);
-int parse_champions(int i, int argc, char **argv, vm_t *vm);
 int parse_champion_flags(parse_champion_flags_args_t args, vm_t *vm);
-int parse_dump_flag(parse_n_flag_args_t *args, vm_t *vm);
-int parse_n_flag(parse_n_flag_args_t *args);
-int parse_a_flag(parse_n_flag_args_t *args);
 #endif //COREWAR_H

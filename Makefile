@@ -5,10 +5,10 @@
 ## Makefile
 ##
 
-SRC	=	src/create_champion.c	\
+SRC	=	src/check_lives.c 	\
+		src/create_champion.c	\
 		src/creates.c	\
 		src/decode_args.c	\
-		src/decode.c	\
 		src/decode_args_with_coding_byte.c	\
 		src/dump_memory.c	\
 		src/init_and_free.c	\
@@ -17,8 +17,6 @@ SRC	=	src/create_champion.c	\
 		src/op.c	\
 		src/read.c	\
 		src/run_vm.c	\
-		src/check_lives.c 	\
-		src/execute_cycle.c \
 		src/instructions/op_add.c	\
 		src/instructions/op_aff.c	\
 		src/instructions/op_and.c	\
@@ -43,10 +41,7 @@ SRC	=	src/create_champion.c	\
 		src/utilities/sort_process.c	\
 		src/utilities/swap_endian.c 	\
 		src/parser/parse_arguments.c	\
-		src/parser/parse_champion_flags.c	\
-		src/parser/parse_a_flag.c	\
-		src/parser/parse_n_flag.c	\
-		src/parser/parse_dump_flag.c
+		src/parser/parse_flags.c
 
 
 LIB_SRC	=	lib/my/my_getnbr.c	\
@@ -94,7 +89,7 @@ coding_style: fclean
 	$(RM) coding-style-reports.log
 
 unit_tests: fclean all
-	gcc -o unit_tests tests/test_mysh.c $(SRC) -Iinclude/ \
+	gcc -o unit_tests tests/test_corewar.c $(SRC) -Iinclude/ \
 	--coverage -lcriterion -lreadline
 	./unit_tests
 

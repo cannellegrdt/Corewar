@@ -8,29 +8,6 @@
 #include "corewar.h"
 #include <unistd.h>
 
-int get_param_type(decode_context_t *ctx, int param_index)
-{
-    byte_t param_type;
-
-    if (!ctx->has_coding_byte) {
-        if (ctx->opcode == 1 || ctx->opcode == 9 || ctx->opcode == 12 ||
-        ctx->opcode == 15)
-            return T_DIR;
-        return 0;
-    }
-    param_type = (ctx->coding_byte >> (6 - 2 * param_index)) & 0x3;
-    switch (param_type) {
-        case 1:
-            return T_REG;
-        case 2:
-            return T_DIR;
-        case 3:
-            return T_IND;
-        default:
-            return 0;
-    }
-}
-
 static void initialize_wait_cycles(process_t *process, byte_t opcode)
 {
     if (process->wait_cycles == 0) {

@@ -46,25 +46,15 @@ static void clean_processes(vm_t *vm)
     }
 }
 
-static void update_lives(vm_t *vm)
+void check_lives(vm_t *vm)
 {
+    clean_processes(vm);
     vm->checks_performed++;
     if (vm->lives_in_period >= NBR_LIVE) {
         vm->cycle_to_die -= CYCLE_DELTA;
         vm->lives_in_period = 0;
         vm->checks_performed = 0;
     }
-}
-
-static void reset_champions_lives(vm_t *vm)
-{
     for (int i = 0; i < vm->champion_count; i++)
         vm->champions[i]->lives_in_period = 0;
-}
-
-void check_lives(vm_t *vm)
-{
-    clean_processes(vm);
-    update_lives(vm);
-    reset_champions_lives(vm);
 }

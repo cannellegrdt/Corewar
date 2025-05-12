@@ -8,15 +8,6 @@
 #include "corewar.h"
 #include <fcntl.h>
 
-static int open_champion_file(const char *filename)
-{
-    int fd = open(filename, O_RDONLY);
-
-    if (fd == -1)
-        return -1;
-    return fd;
-}
-
 static int read_champion_header(int fd, header_t *header)
 {
     ssize_t read_size = read(fd, header, sizeof(header_t));
@@ -57,7 +48,7 @@ static int read_champion_code(int fd, champion_t *champ)
 
 int read_champion_file(champion_t *champ)
 {
-    int fd = open_champion_file(champ->filename);
+    int fd = open(champ->filename, O_RDONLY);
     header_t header;
     int prog_size;
 
