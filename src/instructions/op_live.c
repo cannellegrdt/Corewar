@@ -23,7 +23,7 @@ static void write_live_message(bool champion_found, champion_t *champion,
     }
 }
 
-void op_live(process_t *process, byte_t *memory __attribute__((unused)),
+void op_live(process_t *process, byte_t *memory UNUSED,
     champion_t **champions, int champion_count)
 {
     int champion_number = process->current_op_args[0];

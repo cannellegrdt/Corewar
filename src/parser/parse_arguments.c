@@ -10,13 +10,29 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-static int cleanup_and_return_error(champion_t *current_champ,
-    champion_t **champs, int champ_count, char *error_msg_text)
+static char *error_msg_from_id(int id)
+{
+    switch (id) {
+        case 0:
+            return NULL;
+        case 1:
+            return "Error: memory allocation failed.\n";
+        case 2:
+            return "Error: champion file expected.\n";
+        case 3:
+            return "Error: unknown flag.\n";
+        default:
+            return "Error: unknown error.\n";
+    }
+}
+
+static int clean_n_return(champion_t *current_champ,
+    champion_t **champs, int champ_count, int err_id)
 {
     if (current_champ)
         free(current_champ);
     free_champions(champs, champ_count);
-    return error_msg(error_msg_text, 84);
+    return error_msg(error_msg_from_id(err_id), 84);
 }
 
 static int assign_champion_number(champion_t *champ, int *next_num,
@@ -38,18 +54,14 @@ static int process_single_champion(process_single_champion_args_t args,
     int next_num = 1;
 
     if (!champ)
-        return cleanup_and_return_error(NULL, args.champs, *args.champ_count,
-        "Error: memory allocation failed.\n");
+        return clean_n_return(NULL, args.champs, *args.champ_count, 1);
     if (parse_champion_flags((parse_champion_flags_args_t){args.i, args.argc,
         args.argv, champ, *args.champ_count, args.champs}, vm) != 0)
-        return cleanup_and_return_error(champ, args.champs, *args.champ_count,
-            NULL);
+        return clean_n_return(champ, args.champs, *args.champ_count, 0);
     if (*args.i >= args.argc)
-        return cleanup_and_return_error(champ, args.champs, *args.champ_count,
-        "Error: champion filename expected.\n");
+        return clean_n_return(champ, args.champs, *args.champ_count, 2);
     if (args.argv[*args.i][0] == '-')
-        return cleanup_and_return_error(champ, args.champs, *args.champ_count,
-        "Error: Unknown flag.\n");
+        return clean_n_return(champ, args.champs, *args.champ_count, 3);
     champ->filename = my_strdup(args.argv[*args.i]);
     (*args.i)++;
     assign_champion_number(champ, &next_num, *args.champ_count, args.champs);

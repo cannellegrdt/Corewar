@@ -13,11 +13,13 @@ void free_champions(champion_t **champions, int count)
     if (!champions)
         return;
     for (int i = 0; i < count; i++) {
-        if (champions[i]) {
-            free((champions[i]->code) ? champions[i]->code : NULL);
-            free((champions[i]->filename) ? champions[i]->filename : NULL);
-            free(champions[i]);
-        }
+        if (!champions[i])
+            continue;
+        if (champions[i]->code)
+            free(champions[i]->code);
+        if (champions[i]->filename)
+            free(champions[i]->filename);
+        free(champions[i]);
     }
     free(champions);
 }

@@ -13,6 +13,8 @@
     #include <unistd.h>
     #include <stdlib.h>
 
+    #define UNUSED __attribute__((unused))
+
 typedef unsigned char byte_t;
 
 typedef struct champion_s {
@@ -122,6 +124,12 @@ typedef struct {
     process_t *process;
     int arg_index;
 } arg_reader_t;
+
+typedef struct {
+    int arg_index;
+    int arg_type;
+    int offset;
+} process_single_argument_args_t;
 /// CODING STYLE ///
 
 /* utilities */
@@ -165,15 +173,15 @@ bool read_coding_byte(decode_context_t *ctx);
 void op_live(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_ld(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)));
+    UNUSED, int champion_count UNUSED);
 void op_st(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_add(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)));
+    UNUSED, int champion_count UNUSED);
 void op_sub(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_and(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)));
+    UNUSED, int champion_count UNUSED);
 void op_or(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_xor(process_t *process, byte_t *memory, champion_t **champions,
@@ -181,7 +189,7 @@ void op_xor(process_t *process, byte_t *memory, champion_t **champions,
 void op_zjmp(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_ldi(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)));
+    UNUSED, int champion_count UNUSED);
 void op_sti(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_fork(process_t *process, byte_t *memory, champion_t **champions,
@@ -192,9 +200,9 @@ void op_lldi(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
 void op_lfork(process_t *process, byte_t *memory, champion_t **champions,
     int champion_count);
-void op_aff(process_t *process, byte_t *memory __attribute__((unused)),
-    champion_t **champions __attribute__((unused)), int champion_count
-    __attribute__((unused)));
+void op_aff(process_t *process, byte_t *memory UNUSED,
+    champion_t **champions UNUSED, int champion_count
+    UNUSED);
 
 /* parser */
 int parse_arguments(int argc, char *argv[]);

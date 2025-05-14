@@ -56,18 +56,19 @@ static bool is_valid_register(int reg_value)
 }
 
 static int process_single_argument(vm_t *vm, process_t *process,
-    int arg_index, int arg_type, int offset)
+    process_single_argument_args_t args)
 {
-    process->current_op_arg_types[arg_index] = arg_type;
-    if (arg_type == T_REG) {
-        offset = read_register_arg(vm, process, arg_index, offset);
-        if (!is_valid_register(process->current_op_args[arg_index]))
-            return offset;
-    } else if (arg_type == T_DIR)
-        return read_direct_arg(vm, process, arg_index, offset);
-    if (arg_type == T_IND)
-        return read_indirect_arg(vm, process, arg_index, offset);
-    return offset;
+    process->current_op_arg_types[args.arg_index] = args.arg_type;
+    if (args.arg_type == T_REG) {
+        args.offset = read_register_arg(vm, process, args.arg_index,
+            args.offset);
+        if (!is_valid_register(process->current_op_args[args.arg_index]))
+            return args.offset;
+    } else if (args.arg_type == T_DIR)
+        return read_direct_arg(vm, process, args.arg_index, args.offset);
+    if (args.arg_type == T_IND)
+        return read_indirect_arg(vm, process, args.arg_index, args.offset);
+    return args.offset;
 }
 
 int decode_args_with_coding_byte(vm_t *vm, process_t *process, const op_t *op,
@@ -83,7 +84,8 @@ int decode_args_with_coding_byte(vm_t *vm, process_t *process, const op_t *op,
         0x3);
         if (!(arg_type != 0 && ((arg_type & op->type[i]) != 0)))
             return start_offset + 1;
-        offset = process_single_argument(vm, process, i, arg_type, offset);
+        offset = process_single_argument(vm, process,
+            (process_single_argument_args_t){i, arg_type, offset});
         if (arg_type == T_REG &&
             !is_valid_register(process->current_op_args[i]))
             return offset;

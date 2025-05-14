@@ -20,7 +20,7 @@ static bool validate_lldi_args(process_t *process)
 }
 
 void op_lldi(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)))
+    UNUSED, int champion_count UNUSED)
 {
     int arg1_type = process->current_op_arg_types[0];
     int arg2_type = process->current_op_arg_types[1];

@@ -8,9 +8,8 @@
 #include "corewar.h"
 #include <stdlib.h>
 
-void op_fork(process_t *process, byte_t *memory __attribute__((unused)),
-    champion_t **champions __attribute__((unused)), int champion_count
-    __attribute__((unused)))
+void op_fork(process_t *process, byte_t *memory UNUSED,
+    champion_t **champions UNUSED, int champion_count UNUSED)
 {
     int arg1_value = process->current_op_args[0];
     process_t *new_process;

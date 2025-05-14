@@ -26,7 +26,7 @@ static int get_ldi_values(process_t *process, byte_t *memory, int *value1,
 }
 
 void op_ldi(process_t *process, byte_t *memory, champion_t **champions
-    __attribute__((unused)), int champion_count __attribute__((unused)))
+    UNUSED, int champion_count UNUSED)
 {
     int arg3_type = process->current_op_arg_types[2];
     int arg3_value = process->current_op_args[2];

@@ -7,9 +7,8 @@
 
 #include "corewar.h"
 
-void op_zjmp(process_t *process, byte_t *memory __attribute__((unused)),
-    champion_t **champions __attribute__((unused)), int champion_count
-    __attribute__((unused)))
+void op_zjmp(process_t *process, byte_t *memory UNUSED,
+    champion_t **champions UNUSED, int champion_count UNUSED)
 {
     int arg_value = process->current_op_args[0];
     int new_pc;
