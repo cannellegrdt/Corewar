@@ -44,6 +44,16 @@ SRC	=	src/check_lives.c 	\
 		src/parser/parse_flags.c
 
 
+BONUS_SRC	=	$(filter-out src/parser/parse_flags.c src/instructions.c, $(SRC))	\
+			bonus/src/decode.c	\
+			bonus/src/execute_cycle.c	\
+			bonus/src/instructions.c	\
+			bonus/src/json_output.c	\
+			bonus/src/parser/parse_a_flag.c	\
+			bonus/src/parser/parse_champion_flags.c	\
+			bonus/src/parser/parse_dump_flag.c	\
+			bonus/src/parser/parse_n_flag.c
+
 LIB_SRC	=	lib/my/my_getnbr.c	\
 		lib/my/my_memset.c	\
 		lib/my/my_putnbr.c	\
@@ -55,11 +65,13 @@ LIB_SRC	=	lib/my/my_getnbr.c	\
 
 MAIN_SRC	= main.c
 
-OBJ	=	$(SRC:.c=.o) $(MAIN_SRC:.c=.o)
-LIB_OBJ	=	$(LIB_SRC:.c=.o)
+OBJ		=	$(SRC:.c=.o) $(MAIN_SRC:.c=.o)
+BONUS_OBJ	=	$(BONUS_SRC:.c=.o) $(MAIN_SRC:.c=.o)
+LIB_OBJ		=	$(LIB_SRC:.c=.o)
 
-NAME	=	corewar
-LIB	=	libmy.a
+NAME		=	corewar
+BONUS_NAME	=	bonus/corewar
+LIB		=	libmy.a
 
 LDFLAGS    = -L. -lmy
 CFLAGS	+=	-Wall -Wextra -Wpedantic -Werror
@@ -70,15 +82,24 @@ all: $(LIB) $(NAME)
 $(NAME): $(OBJ) $(LIB)
 	gcc -o $(NAME) $(OBJ) -L. -lmy -g3
 
+$(filter bonus/src/%, $(BONUS_OBJ)): CPPFLAGS := -Ibonus/include/ -Iinclude/
+
+install:
+	pip install PyQt5
+
+bonus: $(LIB) $(BONUS_OBJ)
+	gcc -o $(BONUS_NAME) $(BONUS_OBJ) -L. -lmy -g3
+	cd bonus && python3 welcome.py
+
 $(LIB): $(LIB_OBJ)
 	ar rc $(LIB) $(LIB_OBJ)
 	ranlib $(LIB)
 
 clean:
-	$(RM) $(OBJ) $(LIB_OBJ)
+	$(RM) $(OBJ) $(BONUS_OBJ) $(LIB_OBJ)
 
 fclean: clean
-	$(RM) $(NAME) $(LIB)
+	$(RM) $(NAME) $(BONUS_NAME) $(LIB)
 	$(RM) unit_tests *.gcno *.gcda
 
 re: fclean all
@@ -102,4 +123,4 @@ func_tests: fclean all
 
 tests: unit_tests func_tests
 
-.PHONY: all clean fclean re coding_style unit_tests gcovr func_tests tests
+.PHONY: all bonus install clean fclean re coding_style unit_tests gcovr func_tests tests
