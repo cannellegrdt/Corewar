@@ -101,6 +101,7 @@ clean:
 fclean: clean
 	$(RM) $(NAME) $(BONUS_NAME) $(LIB)
 	$(RM) unit_tests *.gcno *.gcda
+	$(RM) outputs_tester/*_output.txt
 
 re: fclean all
 

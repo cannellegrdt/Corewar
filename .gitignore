@@ -5,7 +5,7 @@ a.out
 *.gcno
 *.gcda
 *.txt
-!outputs_tester/*.txt
+!outputs_tester/*_attempt.txt
 *.pdf
 !B-CPE-200_Corewar.pdf
 exe

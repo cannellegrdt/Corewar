@@ -1,3 +1,10 @@
+##
+## EPITECH PROJECT, 2025
+## Corewar
+## File description:
+## auto_tester.sh
+##
+
 #!/bin/bash
 
 champions_dir="champions"
@@ -30,7 +37,7 @@ for ((i=0; i<$total_champions; i++)); do
         output_file="$outputs_dir/${champ1_name}_${champ2_name}_output.txt"
         output_log_file="$outputs_dir/${champ1_name}_${champ2_name}_log_output.txt"
 
-        ./corewar $champions_dir/$champ1 $champions_dir/$champ2 2> "$output_log_file" | tee fichier_tout.txt > "$output_file"
+        ./corewar $champions_dir/$champ1 $champions_dir/$champ2 2> "$output_log_file" | tee file_all.txt > "$output_file"
         
         if diff -q "$attempt_file" "$output_file" >/dev/null; then
             print_colored "OK" "$champ1" "$champ2"
