@@ -7,6 +7,7 @@ a.out
 *.txt
 !outputs_tester/*.txt
 *.pdf
+!B-CPE-200_Corewar.pdf
 exe
 libmy.a
 unit_tests
@@ -14,8 +15,6 @@ to_not_push
 corewar.c
 corewar
 coding-style-reports.log
-*.py
-binaries
-champions
 attempt_corewar
-bonus
+__pycache__
+.mypy_cache
